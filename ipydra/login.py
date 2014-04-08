@@ -6,8 +6,8 @@ import time
 from flask import Blueprint
 from flask import redirect
 from flask import render_template
-from flask.ext.wtf import Form
-from flask.ext.wtf import TextField
+from flask_wtf import Form
+from wtforms import TextField
 
 from ipydra import db
 from ipydra import models
@@ -65,9 +65,11 @@ def run_server(ip_dir, port):
     """ Run a notebook server with a given ipython directory and port.
         Returns a PID.
     """
+    notebook_dir = '/' + '/'.join(ip_dir.split('/')[:-1]) + '/notebooks'
     pid = subprocess.Popen(['ipython',
                             'notebook',
                             '--profile=nbserver',
+                            '--notebook-dir={0}'.format(notebook_dir),
                             '--NotebookApp.port={0}'.format(port),
                             '--NotebookApp.ipython_dir={0}'.format(ip_dir)]).pid
     return pid
@@ -81,7 +83,13 @@ def create_user_dir(username):
     nb_dir = '{0}/notebooks'.format(user_dir)
 
     os.makedirs(ip_dir)
-    os.makedirs(conf_dir)
+
+    # create the ipython profile
+    subprocess.call(['ipython',
+                     'profile',
+                     'create',
+                     'nbserver',
+                     '--ipython-dir={0}'.format(ip_dir)])
 
     # render config
     config = render_template('ipython_notebook_config.jinja.py',
