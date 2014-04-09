@@ -9,7 +9,7 @@
   }
 
   .form-signin {
-    max-width: 300px;
+    max-width: 600px;
     padding: 19px 29px 29px;
     margin: 0 auto 20px;
     background-color: #fff;
@@ -38,6 +38,9 @@
 {% block content %}
   <form class="form-signin" method="POST">
     <h2 class="form-signin-heading">IPydra</h2>
+    Please enter a <b>unique</b>, <b>alphanumeric</b> username without spaces.<br/>
+    Pick something that will likely not be chosen by anyone else or strange things will happen.</br>
+    (ie: full name, first name followed by bday, etc.)
     {{ form.username(class='input-block-level', placeholder='Your username.') }}
     <button class="btn btn-primary" type="submit">Let's go!</button>
   </form>
