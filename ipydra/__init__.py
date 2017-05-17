@@ -22,6 +22,10 @@ BASE_URL = os.path.expanduser(config.get('ipydra', 'BASE_URL'))
 DATA_DIR = os.path.expanduser(config.get('ipydra', 'DATA_DIR'))
 INITDATA_DIR = os.path.expanduser(config.get('ipydra', 'INITDATA_DIR'))
 
+print "iphydra loaded with:"
+for k, v in config._sections.get('ipydra').iteritems():
+    print '   {}: {}'.format(str(k), str(v))
+
 def create_app():
     """ Creates and returns a flask app instance instance.
     """
