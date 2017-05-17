@@ -114,3 +114,13 @@ def delete_user_dir(username):
     user_dir = '{0}/{1}'.format(DATA_DIR, username)
     shutil.rmtree(user_dir)
 
+@bp.route('/admin/delete/<username>', methods=['POST'])
+def delete(username):
+    """ Delete user from database and remove all data.
+    """
+    user = models.User.query.filter(models.User.username == username).first()
+    db.session.delete(user)
+    db.session.commit()
+
+    delete_user_dir(username)
+    return render_template('admin.jinja.html')
