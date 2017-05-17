@@ -105,9 +105,3 @@ def create_user_dir(username):
         shutil.copytree(INITDATA_DIR, '{0}'.format(nb_dir))
     else:
         os.makedirs(nb_dir)
-
-    # render update_score script
-    script = render_template('update_score.jinja.py', username=username)
-    script_file = open('{0}/update_score.py'.format(nb_dir), 'w')
-    script_file.write(script)
-    script_file.close()
