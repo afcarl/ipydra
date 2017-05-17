@@ -114,7 +114,8 @@ def delete_user_dir(username):
     user_dir = '{0}/{1}'.format(DATA_DIR, username)
     shutil.rmtree(user_dir)
 
-@bp.route('/admin/delete/<username>', methods=['POST'])
+
+@bp.route('/admin/delete/<username>', methods=['GET','POST'])
 def delete(username):
     """ Delete user from database and remove all data.
     """
