@@ -105,3 +105,12 @@ def create_user_dir(username):
         shutil.copytree(INITDATA_DIR, '{0}'.format(nb_dir))
     else:
         os.makedirs(nb_dir)
+
+
+def delete_user_dir(username):
+    """ Delete a users' directory.
+
+    """
+    user_dir = '{0}/{1}'.format(DATA_DIR, username)
+    shutil.rmtree(user_dir)
+
