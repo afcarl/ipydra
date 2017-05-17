@@ -39,7 +39,8 @@ def login():
         # create user model if it doesn't exist for the given username
         if not user:
             # get the next server port
-            port = 9499 + models.User.query.count() + 1
+            #port = 9499 + models.User.query.count() + 1
+            port = models.User.query.order_by(models.User.nbserver_port.desc()).first().nbserver_port
             # create user
             user = models.User()
             user.username = username
