@@ -65,7 +65,7 @@ def run_server(ip_dir, port):
     """ Run a notebook server with a given ipython directory and port.
         Returns a PID.
     """
-    notebook_dir = '/' + '/'.join(ip_dir.split('/')[:-1]) + '/notebooks'
+    notebook_dir = os.path.join(os.path.dirname(ip_dir), 'notebooks')
     pid = subprocess.Popen(['ipython',
                             'notebook',
                             '--profile=nbserver',
