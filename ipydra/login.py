@@ -1,7 +1,8 @@
 import os
-import subprocess
-import shutil
 import time
+import shutil
+import subprocess
+import itertools as it
 
 from flask import Blueprint
 from flask import redirect
@@ -39,11 +40,16 @@ def login():
         # create user model if it doesn't exist for the given username
         if not user:
             # get the next server port
-            port = 9499 + models.User.query.count() + 1
+            used_ports = set(it.chain.from_iterable(
+                models.User.query.with_entities(
+                    models.User.nbserver_port
+                ).all()
+            ))
+            unused_ports = set(range(9500, 9601)).difference(used_ports)
             # create user
             user = models.User()
             user.username = username
-            user.nbserver_port = port
+            user.nbserver_port = unused_ports.pop()
             user = db.session.merge(user)
             db.session.commit()
         # create the user data directory hierarchy
